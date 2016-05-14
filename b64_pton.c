@@ -46,9 +46,9 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 	while (src[i] != '\0' &&  k + 2 < (ssize_t)dstsiz) {
                 if (isspace(src[i]))
                         continue;
-                if ((char)-1 == b64_tbl[src[i]])
+                if ((char)-1 == b64_tbl[(u_char)src[i]])
                         return(-1);
-                val3 |= b64_tbl[src[i]];
+                val3 |= b64_tbl[(u_char)src[i]];
                 if (j % 4 == 3) {
 			/*
 			 * Copy per 3 bytes, since (log2(64) bits) x 4 is
