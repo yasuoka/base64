@@ -54,15 +54,15 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 				return (-1);
 			if (j % 4 == 1) {
 				if (dst != NULL)
-					dst[k] = (val3 & 0xff0) >> 4;
+					dst[k] = val3 >> 4;
 				k++;
 			} else if (j % 4 == 2) {
 				if (dst != NULL)
-					dst[k] = (val3 & 0x3fc) >> 2;
+					dst[k] = val3 >> 2;
 				k++;
 			} else if (j % 4 == 3) {
 				if (dst != NULL)
-					dst[k] = val3 & 0xff;
+					dst[k] = val3;
 				k++;
 			}
 		}
