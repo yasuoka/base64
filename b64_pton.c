@@ -22,9 +22,9 @@ int	 b64_pton(const char *, u_char *, size_t);
 int
 b64_pton(const char *src, u_char *dst, size_t dstsiz)
 {
-	int              i, j, k;
-	uint32_t         val3 = 0;
-	const char       b64_tbl[] =
+	int		 i, j, k;
+	uint32_t	 val3 = 0;
+	const char	 b64_tbl[] =
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x3e\xff\xff\xff\x3f"
