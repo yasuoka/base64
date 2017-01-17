@@ -69,6 +69,8 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 		val3 <<= 6;
 		j++;
 	}
+	if (j % 4 != 0)
+		return (-1);
 
 	return (k);
 }
