@@ -15,6 +15,7 @@
  */
 
 #include <sys/types.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 int	 b64_pton(const char *, u_char *, size_t);
@@ -42,26 +43,32 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff";
 
-	for (i = j = k = 0; src[i] != '\0' &&  k + 2 < (ssize_t)dstsiz; i++) {
+	for (i = j = k = 0; src[i] != '\0'; i++) {
 		if (isspace(src[i]))
 			continue;
 		if (b64_tbl[(u_char)src[i]] == (char)0xff)
 			return(-1);
 		val3 |= b64_tbl[(u_char)src[i]];
-		if (j % 4 == 3) {
-			/*
-			 * Copy per 3 bytes, since (log2(64) bits) x 4 is
-			 * 24bits, it's 3 bytes exactly.
-			 */
-			dst[k++] = (val3 & 0xff0000) >> 16;
-			dst[k++] = (val3 & 0x00ff00) >> 8;
-			dst[k++] = val3 & 0x0000ff;
+		if (src[i] != '=') {
+			if (dst != NULL && k >= (ssize_t)dstsiz)
+				return (-1);
+			if (j % 4 == 1) {
+				if (dst != NULL)
+					dst[k] = (val3 & 0xff0) >> 4;
+				k++;
+			} else if (j % 4 == 2) {
+				if (dst != NULL)
+					dst[k] = (val3 & 0x3fc) >> 2;
+				k++;
+			} else if (j % 4 == 3) {
+				if (dst != NULL)
+					dst[k] = val3 & 0xff;
+				k++;
+			}
 		}
-		val3 <<= 6;	/* shift log2(64) bits */
+		val3 <<= 6;
 		j++;
 	}
-	if (src[i] != '\0')
-		return (-1);
 
-	return (j);
+	return (k);
 }
