@@ -41,7 +41,7 @@ static void
 test_02(void)
 {
 	outlen = b64_pton("aG9nZWhvZ2U=", outbuf, sizeof(outbuf));
-	ASSERT(outlen > 0);
+	ASSERT(outlen == 8);
 	outbuf[outlen] = '\0';
 	ASSERT(strcmp(outbuf, "hogehoge") == 0);
 }
@@ -50,9 +50,16 @@ static void
 test_03(void)
 {
 	outlen = b64_pton("aG9nZ\nWhvZ2U=", outbuf, sizeof(outbuf));
-	ASSERT(outlen > 0);
+	ASSERT(outlen == 8);
 	outbuf[outlen] = '\0';
 	ASSERT(strcmp(outbuf, "hogehoge") == 0);
+}
+
+static void
+test_04(void)
+{
+	outlen = b64_pton("aG9nZ\nWhvZ2U=", NULL, 0);
+	ASSERT(outlen == 8);
 }
 
 int
@@ -61,4 +68,5 @@ main(int argc, char *argv[])
 	TEST(test_01);
 	TEST(test_02);
 	TEST(test_03);
+	TEST(test_04);
 }
