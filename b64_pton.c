@@ -42,8 +42,7 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff";
 
-	i = j = k = 0;
-	while (src[i] != '\0' &&  k + 2 < (ssize_t)dstsiz) {
+	for (i = j = k = 0; src[i] != '\0' &&  k + 2 < (ssize_t)dstsiz; i++) {
 		if (isspace(src[i]))
 			continue;
 		if ((char)-1 == b64_tbl[(u_char)src[i]])
@@ -59,7 +58,6 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 			dst[k++] = val3 & 0x0000ff;
 		}
 		val3 <<= 6;	/* shift log2(64) bits */
-		i++;
 		j++;
 	}
 	if (src[i] != '\0')
