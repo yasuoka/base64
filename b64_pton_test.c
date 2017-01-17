@@ -1,0 +1,64 @@
+/*
+ * cc -o b64_pton_test b64_pton_test.c b64_pton_test.c
+ * ./b64_pton_test
+ */
+#include <stdio.h>
+#include <stdlib.h>
+
+int      b64_pton(const char *, u_char *, size_t);
+
+static int	outlen;
+static u_char	outbuf[1024];
+
+#define ASSERT(_cond)							\
+	do {								\
+		if (!(_cond)) {						\
+			fprintf(stdout, 				\
+			    "NG\nASSERT(%s) failed in %s():%s:%d",	\
+			    #_cond, __func__, __FILE__, __LINE__);	\
+			fflush(stdout);					\
+			abort();					\
+		}							\
+	} while (0/*CONSTCOND*/)
+
+#define TEST(_testfn)				\
+	do {					\
+		printf("%s ... ", #_testfn);	\
+		fflush(stdout);			\
+		_testfn();			\
+		printf("ok\n");			\
+	} while (0/*CONSTCOND*/)
+
+
+static void
+test_01(void)
+{
+	outlen = b64_pton("", outbuf, sizeof(outbuf));
+	ASSERT(outlen == 0);
+}
+
+static void
+test_02(void)
+{
+	outlen = b64_pton("aG9nZWhvZ2U=", outbuf, sizeof(outbuf));
+	ASSERT(outlen > 0);
+	outbuf[outlen] = '\0';
+	ASSERT(strcmp(outbuf, "hogehoge") == 0);
+}
+
+static void
+test_03(void)
+{
+	outlen = b64_pton("aG9nZ\nWhvZ2U=", outbuf, sizeof(outbuf));
+	ASSERT(outlen > 0);
+	outbuf[outlen] = '\0';
+	ASSERT(strcmp(outbuf, "hogehoge") == 0);
+}
+
+int
+main(int argc, char *argv[])
+{
+	TEST(test_01);
+	TEST(test_02);
+	TEST(test_03);
+}
