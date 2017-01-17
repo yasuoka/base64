@@ -4,6 +4,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int      b64_pton(const char *, u_char *, size_t);
 
