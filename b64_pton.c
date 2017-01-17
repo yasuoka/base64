@@ -45,7 +45,7 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 	for (i = j = k = 0; src[i] != '\0' &&  k + 2 < (ssize_t)dstsiz; i++) {
 		if (isspace(src[i]))
 			continue;
-		if ((char)-1 == b64_tbl[(u_char)src[i]])
+		if (b64_tbl[(u_char)src[i]] == (char)0xff)
 			return(-1);
 		val3 |= b64_tbl[(u_char)src[i]];
 		if (j % 4 == 3) {
