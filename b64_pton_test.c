@@ -1,5 +1,5 @@
 /*
- * cc -o b64_pton_test b64_pton_test.c b64_pton_test.c
+ * cc -o b64_pton_test b64_pton.c b64_pton_test.c
  * ./b64_pton_test
  */
 #include <stdio.h>
@@ -63,6 +63,33 @@ test_04(void)
 	ASSERT(outlen == 8);
 }
 
+static void
+test_05(void)
+{
+	outlen = b64_pton("MQ==", outbuf, sizeof(outbuf));
+	ASSERT(outlen == 1);
+	outbuf[outlen] = '\0';
+	ASSERT(strcmp(outbuf, "1") == 0);
+}
+
+static void
+test_06(void)
+{
+	outlen = b64_pton("MTI=", outbuf, sizeof(outbuf));
+	ASSERT(outlen == 2);
+	outbuf[outlen] = '\0';
+	ASSERT(strcmp(outbuf, "12") == 0);
+}
+
+static void
+test_07(void)
+{
+	outlen = b64_pton("MTIz", outbuf, sizeof(outbuf));
+	ASSERT(outlen == 3);
+	outbuf[outlen] = '\0';
+	ASSERT(strcmp(outbuf, "123") == 0);
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -70,4 +97,7 @@ main(int argc, char *argv[])
 	TEST(test_02);
 	TEST(test_03);
 	TEST(test_04);
+	TEST(test_05);
+	TEST(test_06);
+	TEST(test_07);
 }
