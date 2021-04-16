@@ -1,4 +1,4 @@
-CFLAGS=	-std=c99 -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare
+CFLAGS=	-Wall -Wextra -Wno-unused-parameter -Wno-sign-compare
 
 test:
 	cc ${CFLAGS} -o b64_ntop_test b64_ntop_test.c b64_ntop.c
