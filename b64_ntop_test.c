@@ -35,7 +35,7 @@ test_01(void)
 {
 	char	buf[80];
 
-	b64_ntop("hogehoge", 8, buf, sizeof(buf));
+	b64_ntop((u_char *)"hogehoge", 8, buf, sizeof(buf));
 	ASSERT(strcmp(buf, "aG9nZWhvZ2U=") == 0);
 }
 
@@ -44,7 +44,7 @@ static void							\
 rfc4648_ ## _n(void)						\
 {								\
 	char buf[80];						\
-	b64_ntop((_in), strlen((_in)), buf, sizeof(buf));	\
+	b64_ntop((u_char *)(_in), strlen((_in)), buf, sizeof(buf));	\
 	ASSERT(strcmp(buf, (_expect)) == 0);			\
 }
 RFC4648_TEST(1, "", "")
