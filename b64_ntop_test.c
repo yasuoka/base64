@@ -66,4 +66,6 @@ main(int argc, char *argv[])
 	TEST(rfc4648_5);
 	TEST(rfc4648_6);
 	TEST(rfc4648_7);
+
+	exit(EXIT_SUCCESS);
 }

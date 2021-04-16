@@ -100,4 +100,6 @@ main(int argc, char *argv[])
 	TEST(test_05);
 	TEST(test_06);
 	TEST(test_07);
+
+	exit(EXIT_SUCCESS);
 }
