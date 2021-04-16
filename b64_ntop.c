@@ -14,6 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/types.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 int	 b64_ntop(u_char *, size_t, char *, size_t);
