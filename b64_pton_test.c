@@ -43,8 +43,7 @@ test_02(void)
 {
 	outlen = b64_pton("aG9nZWhvZ2U=", outbuf, sizeof(outbuf));
 	ASSERT(outlen == 8);
-	outbuf[outlen] = '\0';
-	ASSERT(strcmp(outbuf, "hogehoge") == 0);
+	ASSERT(memcmp(outbuf, "hogehoge", 8) == 0);
 }
 
 static void
@@ -52,8 +51,7 @@ test_03(void)
 {
 	outlen = b64_pton("aG9nZ\nWhvZ2U=", outbuf, sizeof(outbuf));
 	ASSERT(outlen == 8);
-	outbuf[outlen] = '\0';
-	ASSERT(strcmp(outbuf, "hogehoge") == 0);
+	ASSERT(memcmp(outbuf, "hogehoge", 8) == 0);
 }
 
 static void
@@ -68,8 +66,7 @@ test_05(void)
 {
 	outlen = b64_pton("MQ==", outbuf, sizeof(outbuf));
 	ASSERT(outlen == 1);
-	outbuf[outlen] = '\0';
-	ASSERT(strcmp(outbuf, "1") == 0);
+	ASSERT(memcmp(outbuf, "1", 1) == 0);
 }
 
 static void
@@ -77,8 +74,7 @@ test_06(void)
 {
 	outlen = b64_pton("MTI=", outbuf, sizeof(outbuf));
 	ASSERT(outlen == 2);
-	outbuf[outlen] = '\0';
-	ASSERT(strcmp(outbuf, "12") == 0);
+	ASSERT(memcmp(outbuf, "12", 2) == 0);
 }
 
 static void
@@ -86,8 +82,7 @@ test_07(void)
 {
 	outlen = b64_pton("MTIz", outbuf, sizeof(outbuf));
 	ASSERT(outlen == 3);
-	outbuf[outlen] = '\0';
-	ASSERT(strcmp(outbuf, "123") == 0);
+	ASSERT(memcmp(outbuf, "123", 3) == 0);
 }
 
 int
