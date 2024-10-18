@@ -22,7 +22,8 @@ int	 b64_ntop(u_char *, size_t, char *, size_t);
 int
 b64_ntop(u_char *src, size_t srclength, char *target, size_t target_size)
 {
-	int		 i, j, expect_siz;
+	int		 i, j;
+	size_t		 expect_siz;
 	uint32_t	 bit24;
 	const char	 b64str[] =
 	    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -30,7 +31,7 @@ b64_ntop(u_char *src, size_t srclength, char *target, size_t target_size)
 	expect_siz = ((srclength + 2) / 3) * 4 + 1;
 
 	if (target == NULL)
-		return (expect_siz);
+		return ((int)expect_siz);
 	if (target_size < expect_siz)
 		return (-1);
 
