@@ -24,7 +24,7 @@ static u_char	outbuf[1024];
 
 #define TEST(_testfn)				\
 	do {					\
-		printf("%s ... ", #_testfn);	\
+		printf("%-24s ... ", #_testfn);	\
 		fflush(stdout);			\
 		_testfn();			\
 		printf("ok\n");			\
@@ -85,6 +85,24 @@ test_07(void)
 	ASSERT(memcmp(outbuf, "123", 3) == 0);
 }
 
+static void
+test_exact_size_buffer(void)
+{
+	int	ret;
+	char	out[32];
+
+	/*
+	 * the problem originaly fixed by OpenBSD
+	 * https://github.com/openbsd/src/commit/f5ee4dc2dc626bdaf183ad1537a8a18568914ea1
+	 */
+	/*
+	 * the test case is taken from
+	 * https://gitweb.dragonflybsd.org/dragonfly.git/commitdiff/3bf574a91d98898f33673d3b78fb3fe581c3c4e7
+	 */
+	ret = b64_pton("FCiWkKuhdRq3tMmtAt9CpchTTYMlIW3U3gJsavDNxZI=", out, sizeof(out));
+	ASSERT(ret == 32);
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -95,6 +113,7 @@ main(int argc, char *argv[])
 	TEST(test_05);
 	TEST(test_06);
 	TEST(test_07);
+	TEST(test_exact_size_buffer);
 
 	exit(EXIT_SUCCESS);
 }
