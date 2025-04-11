@@ -45,7 +45,7 @@ b64_pton(const char *src, u_char *dst, size_t dstsiz)
 	    "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff";
 
 	for (i = j = k = 0; src[i] != '\0'; i++) {
-		if (isspace(src[i]))
+		if (isspace((unsigned char)src[i]))
 			continue;
 		if (b64_tbl[(u_char)src[i]] == (char)0xff)
 			return(-1);
